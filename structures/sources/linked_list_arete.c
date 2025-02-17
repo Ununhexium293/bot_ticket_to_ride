@@ -36,3 +36,24 @@ edge_list_t *edge_list_t_add(edge_list_t *list, int node, int color, int length)
 
     return edge_list;
 }
+
+edge_t *edge_list_t_get_node_n(edge_list_t *list, int node)
+{
+    if (list == NULL)
+    {
+        return NULL;
+    }
+
+    while (list -> edge -> node != node && list -> next != NULL)
+    {
+        list = list -> next;
+    }
+
+    if (list -> edge -> node != node){
+        return NULL;
+    } 
+    else 
+    {
+        return list -> edge;
+    }
+}
