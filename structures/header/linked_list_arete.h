@@ -24,11 +24,11 @@ edge_list_t *edge_list_t_add(edge_list_t *list, int node, int color, int length)
 edge_t *edge_list_t_get_node(edge_list_t *list, int node);
 
 /*Return the edge connecting to the node given in the list and remove the node from the list, return NULL if it does not exist*/
-edge_t *edge_list_t_rm_node(edge_list_t **list, int node);
+void edge_list_t_rm_node(edge_list_t **list, int node);
 
 /*Free all allocated space from list*/
 void edge_list_t_free(edge_list_t *list);
 
 /*print the edge list*/
-void edge_list_t_print(edge_list_t *list)
+void edge_list_t_print(edge_list_t *list);
 #endif
