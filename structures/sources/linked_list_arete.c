@@ -37,7 +37,7 @@ edge_list_t *edge_list_t_add(edge_list_t *list, int node, int color, int length)
     return edge_list;
 }
 
-edge_t *edge_list_t_get_node_n(edge_list_t *list, int node)
+edge_t *edge_list_t_get_node(edge_list_t *list, int node)
 {
     if (list == NULL)
     {
@@ -55,5 +55,45 @@ edge_t *edge_list_t_get_node_n(edge_list_t *list, int node)
     else 
     {
         return list -> edge;
+    }
+}
+
+edge_t *edge_list_t_rm_node(edge_list_t **list, int node)
+{
+    if (*list == NULL)
+    {
+        return NULL;
+    }
+
+    edge_list *list_before = NULL;
+
+    while (*list -> edge -> node != node && *list -> next != NULL)
+    {
+        list_before = *list;
+        *list = *list -> next;
+    }
+
+    if (*list -> edge -> node != node){
+        return NULL;
+    } 
+    else 
+    {
+        edge_t *edge = *list -> edge
+
+        list_before -> next = *liste -> next;
+
+        return edge;
+    }
+}
+
+void edge_list_t_free(edge_list_t *list)
+{
+    while (list != NULL)
+    {
+        edge_list_t *temp = list;
+        list = list -> next;
+
+        free(temp -> edge);
+        free(temp);
     }
 }

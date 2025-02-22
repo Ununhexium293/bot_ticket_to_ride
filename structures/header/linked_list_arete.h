@@ -18,12 +18,16 @@ typedef struct edge_list_
     struct edge_list_ *next;
 } edge_list_t;
 
+/*Add an edge to the edge_list_t list by giving the node, the color of the edge and its length*/
 edge_list_t *edge_list_t_add(edge_list_t *list, int node, int color, int length);
 
-edge_t *edge_list_t_get_node_n(edge_list_t *list, int node);
+/*Return the edge connecting to the node given in the list, return NULL if it does not exist*/
+edge_t *edge_list_t_get_node(edge_list_t *list, int node);
 
-edge_t *edge_list_t_rm_node_n(edge_list_t *list, int node);
+/*Return the edge connecting to the node given in the list and remove the node from the list, return NULL if it does not exist*/
+edge_t *edge_list_t_rm_node(edge_list_t **list, int node);
 
-edge_t *edge_list_t_free(edge_list_t *list);
+/*Free all allocated space from list*/
+void edge_list_t_free(edge_list_t *list);
 
 #endif
