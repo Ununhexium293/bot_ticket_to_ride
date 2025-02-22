@@ -30,7 +30,7 @@ void edge_t_print(edge_t *edge)
     printf("node linked : %d\nedge color code: %d\nedge length : %d\n", edge -> node, edge -> color, edge -> length);
 }
 
-edge_list_t *edge_list_t_add(edge_list_t *list, int node, int color, int length)
+void edge_list_t_add(edge_list_t **list, int node, int color, int length)
 {
     edge_t *edge = edge_t_init(node, color, length);
 
@@ -43,9 +43,8 @@ edge_list_t *edge_list_t_add(edge_list_t *list, int node, int color, int length)
     }
 
     edge_list -> edge = edge;
-    edge_list -> next = list;
-
-    return edge_list;
+    edge_list -> next = *list;
+    *list = edge_list;
 }
 
 edge_t *edge_list_t_get_node(edge_list_t *list, int node)
@@ -138,7 +137,7 @@ int main(int argc, char **argv)
 
     for (int i = 0; i < 1024; i++)
     {
-        edge_list_test0 = edge_list_t_add(edge_list_test0, i, i+5, i*2);
+        edge_list_t_add(&edge_list_test0, i, i+5, i*2);
     }
 
     edge_list_t_free(edge_list_test0);
@@ -152,7 +151,7 @@ int main(int argc, char **argv)
 
     for (int i = 0; i < 16; i++)
     {
-        edge_list_test1 = edge_list_t_add(edge_list_test1, i, i+5, i*2);
+        edge_list_t_add(&edge_list_test1, i, i+5, i*2);
     }
 
     assert(edge_list_t_get_node(edge_list_test1, 10) -> node == 10);
