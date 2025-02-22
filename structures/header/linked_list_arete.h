@@ -8,9 +8,8 @@ typedef struct edge_
     int length;
 } edge_t;
 
-edge_t *edge_t_init(int node, int color, int length);
-
-
+/*print the edge*/
+void edge_t_print(edge_t *edge);
 
 typedef struct edge_list_
 {

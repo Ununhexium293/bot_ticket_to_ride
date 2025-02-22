@@ -2,7 +2,7 @@
 
 //#define DEBUG
 
-edge_t *edge_t_init(int node, int color, int length)
+static edge_t *edge_t_init(int node, int color, int length)
 {
     edge_t *edge = malloc(sizeof(edge_t));
 
@@ -17,6 +17,12 @@ edge_t *edge_t_init(int node, int color, int length)
     edge -> length = length;
 
     return edge;
+}
+
+void edge_t_print(edge_t *edge)
+{
+    printf("node linked : %d\nedge color code: %d\nedge length : %d\n", edge -> node, edge -> color, edge -> length);
+    fflush(stdout);
 }
 
 edge_list_t *edge_list_t_add(edge_list_t *list, int node, int color, int length)
