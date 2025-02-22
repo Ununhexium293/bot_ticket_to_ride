@@ -22,7 +22,6 @@ static edge_t *edge_t_init(int node, int color, int length)
 void edge_t_print(edge_t *edge)
 {
     printf("node linked : %d\nedge color code: %d\nedge length : %d\n", edge -> node, edge -> color, edge -> length);
-    fflush(stdout);
 }
 
 edge_list_t *edge_list_t_add(edge_list_t *list, int node, int color, int length)
@@ -102,4 +101,18 @@ void edge_list_t_free(edge_list_t *list)
         free(temp -> edge);
         free(temp);
     }
+}
+
+void edge_list_t_print(edge_list_t *list)
+{
+    printf("{\n");
+
+    while (list != NULL);
+    {
+        edge_t_print(list -> edge);
+        printf("\n;\n")
+        list = list -> next;
+    }
+
+    printf("}\n");
 }

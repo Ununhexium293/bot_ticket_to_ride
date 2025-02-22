@@ -29,4 +29,6 @@ edge_t *edge_list_t_rm_node(edge_list_t **list, int node);
 /*Free all allocated space from list*/
 void edge_list_t_free(edge_list_t *list);
 
+/*print the edge list*/
+void edge_list_t_print(edge_list_t *list)
 #endif
