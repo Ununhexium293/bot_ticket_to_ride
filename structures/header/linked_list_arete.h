@@ -31,4 +31,5 @@ void edge_list_t_free(edge_list_t *list);
 
 /*print the edge list*/
 void edge_list_t_print(edge_list_t *list);
+
 #endif
