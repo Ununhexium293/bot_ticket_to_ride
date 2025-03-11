@@ -2,13 +2,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define DEBUG_LINKED_LIST
+//#define DEBUG_LINKED_LIST
 
 #ifdef DEBUG_LINKED_LIST
 #include <assert.h>
 #endif
 
-static edge_t *edge_t_init(int node, int color, int length)
+static edge_t *edge_t_init(int node, int color1, int color2, int length)
 {
     edge_t *edge = malloc(sizeof(edge_t));
 
@@ -19,7 +19,8 @@ static edge_t *edge_t_init(int node, int color, int length)
     }
 
     edge -> node = node;
-    edge -> color = color;
+    edge -> color1 = color1;
+    edge -> color2 = color2;
     edge -> length = length;
 
     return edge;
@@ -27,12 +28,12 @@ static edge_t *edge_t_init(int node, int color, int length)
 
 void edge_t_print(edge_t *edge)
 {
-    printf("node linked : %d\nedge color code: %d\nedge length : %d\n", edge -> node, edge -> color, edge -> length);
+    printf("node linked : %d\nedge color1 code: %d\nedge color2 code : %d\nedge length : %d\n", edge -> node, edge -> color1, edge -> color2, edge -> length);
 }
 
-void edge_list_t_add(edge_list_t **list, int node, int color, int length)
+void edge_list_t_add(edge_list_t **list, int node, int color1, int color2, int length)
 {
-    edge_t *edge = edge_t_init(node, color, length);
+    edge_t *edge = edge_t_init(node, color1, color2,  length);
 
     edge_list_t *edge_list = malloc(sizeof(edge_list_t));
 
@@ -81,12 +82,18 @@ void edge_list_t_rm_node(edge_list_t **list, int node)
             list_before = temp;
             temp = temp -> next;
         }
-
-        if (temp -> edge -> node == node){
+        
+        if (temp -> edge -> node == node && list_before != NULL){
             list_before -> next = temp -> next;
 
             free(temp -> edge);
             free(temp);
+        }else if (temp -> edge -> node == node && list_before == NULL)
+        {
+            free(temp -> edge);
+            free(temp);
+
+            *list = NULL;
         }
     }
 }
@@ -119,6 +126,8 @@ void edge_list_t_print(edge_list_t *list)
 
 #ifdef DEBUG_LINKED_LIST
 
+
+//à modifier
 int main(int argc, char **argv)
 {
     /*test edge_t functions*/

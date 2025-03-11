@@ -4,7 +4,8 @@
 typedef struct edge_
 {
     int node;
-    int color; /*à changer (le type)*/
+    int color1; /*à changer (le type)*/
+    int color2;
     int length;
 } edge_t;
 
@@ -18,7 +19,7 @@ typedef struct edge_list_
 } edge_list_t;
 
 /*Add an edge to the edge_list_t list by giving the node, the color of the edge and its length*/
-void edge_list_t_add(edge_list_t **list, int node, int color, int length);
+void edge_list_t_add(edge_list_t **list, int node, int color1, int color2, int length);
 
 /*Return the edge connecting to the node given in the list, return NULL if it does not exist*/
 edge_t *edge_list_t_get_node(edge_list_t *list, int node);
