@@ -3,9 +3,9 @@
 #include "../header/linked_list_arete.h"
 #include "../header/graph_board.h"
 
-#define DEBGUG_GRAPH_BOARD
+//#define DEBGUG_GRAPH_BOARD
 
-board_t *board_t_init(int nb_node)
+board_t *board_t_init(int nb_node, int cards[4])
 {
     board_t *board = malloc(sizeof(board_t));
 
@@ -15,6 +15,7 @@ board_t *board_t_init(int nb_node)
         exit(EXIT_FAILURE);
     }
 
+    /*initialisation du graph à NULL*/
     edge_list_t **graph = malloc(sizeof(edge_list_t *) * nb_node);
 
     if (graph == NULL)
@@ -28,8 +29,30 @@ board_t *board_t_init(int nb_node)
         graph[i] = NULL;
     }
 
+    /*initialisation des cartes à 0 puis ajout des cartes de début*/
+    int *card = malloc(sizeof(int) * 9);
+
+    if (card == NULL)
+    {
+        printf("Allocation of size int * 9 failed.\n");
+        exit(EXIT_FAILURE);
+    }
+
+    for (int i = 0; i < 9; i++)
+    {
+        card[i] = 0;
+    }
+
+    for (int i = 0; i < 4; i++)
+    {
+        card[cards[i]] += 1;
+    }
+
+
     board -> graph = graph;
     board -> nb_node = nb_node;
+    board -> cards = card;
+    board -> wagons = 45;
 
     return board;
 }
@@ -42,6 +65,7 @@ void board_t_free(board_t *board)
     }
 
     free(board -> graph);
+    free(board -> cards);
     free(board);
 }
 
@@ -61,6 +85,7 @@ void board_t_rm(board_t *board, int node_a, int node_b)
 
 int main(void)
 {
+    int card[4]= {1, 2, 3, 4};
     /*test init and free*/
 
         board_t *test_board_0 = board_t_init(31415);

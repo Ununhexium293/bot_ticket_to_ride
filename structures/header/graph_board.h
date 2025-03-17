@@ -7,10 +7,13 @@ typedef struct board_
 {
     edge_list_t **graph;
     int nb_node;
+    int *cards;
+    int wagons;
+    /*objectif à ajouter*/
 } board_t;
 
 /*Create an empty board*/
-board_t *board_t_init(int nb_node);
+board_t *board_t_init(int nb_node, int cards[4]);
 
 /*Add an edge to the graph, linking node_a and noe_b*/
 void board_t_add(board_t *board, int node_a, int node_b, int length, int color1, int color2);
