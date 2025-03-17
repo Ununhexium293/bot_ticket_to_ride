@@ -2,3 +2,5 @@ tickettorideapi
 .vscode
 test.c
 Makefile
+bot
+*.o
