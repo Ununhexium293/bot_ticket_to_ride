@@ -4,7 +4,7 @@
 typedef struct p_queue_{
     int node;
     float priority;
-    struct p_queue_ tail;
+    struct p_queue_ *tail;
 } p_queue_t;
 
 /*add an element to the priority queue*/
