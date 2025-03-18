@@ -4,7 +4,7 @@
 
 //#define DEBUG_PRIORITY_QUEUE
 
-void p_queue_t_add(p_queue_t **queue, int node, float priority)
+void p_queue_t_add(p_queue_t **queue, int node, int parent, float priority)
 {
     p_queue_t *temp_prec = NULL;
     p_queue_t *temp = *queue;
@@ -17,6 +17,7 @@ void p_queue_t_add(p_queue_t **queue, int node, float priority)
 
     p_queue_t *new_head = malloc(sizeof(p_queue_t));
     new_head -> node = node;
+    new_head -> parent = parent;
     new_head -> priority = priority;
     new_head -> tail = temp;
 

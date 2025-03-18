@@ -3,6 +3,7 @@
 
 typedef struct p_queue_{
     int node;
+    int parent;
     float priority;
     struct p_queue_ *tail;
 } p_queue_t;
