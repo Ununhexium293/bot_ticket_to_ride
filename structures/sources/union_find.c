@@ -53,3 +53,20 @@ int union_find_t_find(union_find_t *arm, int node)
     return current;
 }
 
+void union_find_t_union(union_find_t *arm, int node_a, int node_b)
+{
+    int rep_a = union_find_t_find(arm, node_a);
+    int rep_b = union_find_t_find(arm, node_b);
+
+    if (arm -> rank[rep_a] > arm -> rank[rep_b])
+    {
+        arm -> former[rep_b] = rep_a;
+    }else{
+        arm -> former[rep_a] = rep_b;
+
+        if (arm -> rank[rep_a] = arm -> rank[rep_b])
+        {
+            arm -> rank[rep_b] += 1;
+        }
+    }
+}
