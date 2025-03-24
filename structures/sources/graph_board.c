@@ -45,7 +45,7 @@ board_t *board_t_init(int nb_node, int cards[4])
 
     for (int i = 0; i < 4; i++)
     {
-        card[cards[i]] += 1;
+        card[cards[i] - 1] += 1;
     }
 
 
