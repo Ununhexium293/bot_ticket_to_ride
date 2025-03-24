@@ -70,3 +70,10 @@ void union_find_t_union(union_find_t *arm, int node_a, int node_b)
         }
     }
 }
+
+void union_find_t_free(union_find_t *arm)
+{
+    free(arm -> former);
+    free(arm -> rank);
+    free(arm);
+}
