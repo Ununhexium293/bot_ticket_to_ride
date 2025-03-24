@@ -3,6 +3,7 @@
 
 typedef struct {
     int *former;
+    int *rank;
     int nb_node;
 }union_find_t;
 
