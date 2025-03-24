@@ -38,6 +38,7 @@ union_find_t *union_find_t_init(int nb_node)
 
     arm -> former = former;
     arm -> nb_node = nb_node;
+    arm -> rank = rank;
 
     return arm;
 }
