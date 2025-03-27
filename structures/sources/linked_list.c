@@ -2,6 +2,8 @@
 #include <stdio.h>
 #include "../header/linked_list.h"
 
+#include <assert.h>
+
 void linked_list_t_add(linked_list_t **list, void *head)
 {
     /*protect against dereferencing a NULL pointer*/
@@ -50,7 +52,7 @@ void linked_list_t_rm(linked_list_t **list, void *head, int (*is_equal)(void *, 
         {
             *list = current -> tail;
         }else{
-            previous = current -> tail;
+            previous -> tail = current -> tail;
         }
 
         free_head(current -> head);
@@ -76,6 +78,6 @@ void linked_list_t_print(linked_list_t *list, void (*print_head)(void *))
     {
         print_head(list -> head);
 
-        list = list -> head;
+        list = list -> tail;
     }
 }
