@@ -64,7 +64,7 @@ void union_find_t_union(union_find_t *arm, int node_a, int node_b)
     }else{
         arm -> former[rep_a] = rep_b;
 
-        if (arm -> rank[rep_a] = arm -> rank[rep_b])
+        if (arm -> rank[rep_a] == arm -> rank[rep_b])
         {
             arm -> rank[rep_b] += 1;
         }

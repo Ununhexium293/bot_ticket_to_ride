@@ -14,12 +14,12 @@ void linked_list_t_add(linked_list_t **list, void *head)
     
     if (new_element == NULL)
     {
-        printf("Allocation failure in file %s, function %s, line %d\n", __file__, __func__, __line__);
+        printf("Allocation failure in file %s, function %s, line %d\n", __FILE__, __func__, __LINE__);
         fflush(stdout);
         exit(EXIT_FAILURE);
     }
      
-    new_element -> head;
+    new_element -> head = head;
     new_element -> tail = *list;
      
     *list = new_element;
