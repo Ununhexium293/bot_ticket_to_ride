@@ -50,29 +50,29 @@ int *dijkstra(board_t *board, board_t *my_board, int node_a, int node_b, float p
             seen[queue -> node] = 1;
 
             /*available*/
-            edge_list_t *list = board -> graph[queue -> node];
+            linked_list_t *list = board -> graph[queue -> node];
             while (list != NULL)
             {
-                if (!seen[list -> edge -> node])
+                if (!seen[edge_list_head(list) -> node])
                 {
                     /*Here the priority is calculated with a combination of the length and the point of the path*/
-                    p_queue_t_add(&queue, list -> edge -> node, queue -> node, queue -> priority + (proportion * ((float) list -> edge -> length)) + ((1. - proportion) * (16 - ((float) point(list -> edge -> length)))));
+                    p_queue_t_add(&queue, edge_list_head(list) -> node, queue -> node, queue -> priority + (proportion * ((float) edge_list_head(list) -> length)) + ((1. - proportion) * (16 - ((float) point(edge_list_head(list) -> length)))));
                 }
 
-                list = list -> next;
+                list = list -> tail;
             }
 
             /*already own by me*/
             list = my_board -> graph[queue -> node];
             while (list != NULL)
             {
-                if (!seen[list -> edge -> node])
+                if (!seen[edge_list_head(list) -> node])
                 {
                     /*Here the priority is calculated with the length only because we already own the path*/
-                    p_queue_t_add(&queue, list -> edge -> node, queue -> node, queue -> priority);
+                    p_queue_t_add(&queue, edge_list_head(list) -> node, queue -> node, queue -> priority);
                 } 
 
-                list = list -> next;
+                list = list -> tail;
             }
 
             ///*test*/

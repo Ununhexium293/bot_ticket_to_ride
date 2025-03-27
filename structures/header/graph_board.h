@@ -5,7 +5,7 @@
 
 typedef struct board_
 {
-    edge_list_t **graph;
+    linked_list_t **graph;
     int nb_node;
     int *cards;
     int wagons;

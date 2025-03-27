@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define DEBUG_LINKED_LIST
+//#define DEBUG_LINKED_LIST
 
 #ifdef DEBUG_LINKED_LIST
 #include <assert.h>
@@ -92,6 +92,16 @@ void edge_list_print(linked_list_t *list)
     printf("}\n\n");
 }
 
+edge_t *edge_list_head(linked_list_t *list)
+{
+    if (list == NULL)
+    {
+        return NULL;
+    }else{
+        return (edge_t *) list -> head;
+    }
+}
+
 #ifdef DEBUG_LINKED_LIST
 
 
@@ -142,7 +152,7 @@ int main(void)
     edge_list_rm_node(&edge_list_test1, 10);
     
     edge_list_rm_node(&edge_list_test1, 60);
-    
+
     edge_list_print(edge_list_test1);
 
     edge_list_rm_node(NULL, 10);

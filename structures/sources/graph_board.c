@@ -16,7 +16,7 @@ board_t *board_t_init(int nb_node, int cards[4])
     }
 
     /*initialisation du graph à NULL*/
-    edge_list_t **graph = malloc(sizeof(edge_list_t *) * nb_node);
+    linked_list_t **graph = malloc(sizeof(linked_list_t *) * nb_node);
 
     if (graph == NULL)
     {
@@ -61,7 +61,7 @@ void board_t_free(board_t *board)
 {
     for (int i = 0; i < board -> nb_node; i++)
     {
-        edge_list_t_free(board -> graph[i]);
+        edge_list_free(board -> graph[i]);
     }
 
     free(board -> graph);
@@ -71,14 +71,14 @@ void board_t_free(board_t *board)
 
 void board_t_add(board_t *board, int node_a, int node_b, int length, int color1, int color2)
 {
-    edge_list_t_add(&(board -> graph[node_a]), node_b, color1, color2, length);
-    edge_list_t_add(&(board -> graph[node_b]), node_a, color1, color2, length);
+    edge_list_add(&(board -> graph[node_a]), node_b, color1, color2, length);
+    edge_list_add(&(board -> graph[node_b]), node_a, color1, color2, length);
 }
 
 void board_t_rm(board_t *board, int node_a, int node_b)
 {
-    edge_list_t_rm_node(&(board -> graph[node_a]), node_b);
-    edge_list_t_rm_node(&(board -> graph[node_b]), node_a);
+    edge_list_rm_node(&(board -> graph[node_a]), node_b);
+    edge_list_rm_node(&(board -> graph[node_b]), node_a);
 }
 
 #ifdef DEBGUG_GRAPH_BOARD
