@@ -1,6 +1,6 @@
 tickettorideapi
 .vscode
-test.c
+test*
 Makefile
 bot
 *.o

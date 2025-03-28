@@ -38,61 +38,56 @@ int *dijkstra(board_t *board, board_t *my_board, int node_a, int node_b, float p
 
     p_queue_t *queue = NULL;
 
-    node_p_queue_t_add(&queue, node_a, -1, 0);
+    node_p_queue_push(&queue, node_a, -1, 0.);
 
+
+
+
+
+
+    /*______________________*/
     while (!seen[node_b] && queue != NULL)
     {
-        if (!seen[queue -> node])
+        float priority = *((float *) queue -> priority);
+        double_node_t *nodes = node_p_queue_pull(&queue);
+
+        if (!seen[nodes -> node])
         {
 
-            parent[queue -> node] = queue -> parent;
+            parent[nodes -> node] = nodes -> parent;
 
-            seen[queue -> node] = 1;
+            seen[nodes -> node] = 1;
 
             /*available*/
-            linked_list_t *list = board -> graph[queue -> node];
+            linked_list_t *list = board -> graph[nodes -> node];
             while (list != NULL)
             {
                 if (!seen[edge_list_head(list) -> node])
                 {
                     /*Here the priority is calculated with a combination of the length and the point of the path*/
-                    node_p_queue_t_add(&queue, edge_list_head(list) -> node, queue -> node, queue -> priority + (proportion * ((float) edge_list_head(list) -> length)) + ((1. - proportion) * (16 - ((float) point(edge_list_head(list) -> length)))));
+                    node_p_queue_push(&queue, edge_list_head(list) -> node, nodes -> node, priority + (proportion * ((float) edge_list_head(list) -> length)) + ((1. - proportion) * (16 - ((float) point(edge_list_head(list) -> length)))));
                 }
 
                 list = list -> tail;
             }
 
             /*already own by me*/
-            list = my_board -> graph[queue -> node];
+            list = my_board -> graph[nodes -> node];
             while (list != NULL)
             {
                 if (!seen[edge_list_head(list) -> node])
                 {
                     /*Here the priority is calculated with the length only because we already own the path*/
-                    node_p_queue_t_add(&queue, edge_list_head(list) -> node, queue -> node, queue -> priority);
+                    node_p_queue_push(&queue, edge_list_head(list) -> node, nodes -> node, priority);
                 } 
 
                 list = list -> tail;
             }
-
-            ///*test*/
-            //for (int i = 0; i < board -> nb_node; i++)
-            //{
-            //    printf("%d ", seen[i]);
-            //}
-            //printf("\n%d\n", queue -> node);
-            //for (int i = 0; i < board -> nb_node; i++)
-            //{
-            //    printf("%d ", parent[i]);
-            //}
-            //printf("\n\n\n");
-            //fflush(stdout);
         }
-
-        node_p_queue_t_rm(&queue);
+        free(nodes);
     }
 
-    node_p_queue_t_free(queue);
+    node_p_queue_free(queue);
 
     if (seen[node_b])
     {

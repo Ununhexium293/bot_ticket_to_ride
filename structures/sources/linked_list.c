@@ -54,8 +54,10 @@ void linked_list_t_rm(linked_list_t **list, void *head, int (*is_equal)(void *, 
         }else{
             previous -> tail = current -> tail;
         }
-
-        free_head(current -> head);
+        if (free_head != NULL)
+        {
+            free_head(current -> head);
+        }
         free(current);
     }
 }
@@ -67,7 +69,10 @@ void linked_list_t_free(linked_list_t *list, void (*free_head)(void *))
         linked_list_t *temp = list;
         list = list -> tail;
 
-        free_head(temp -> head);
+        if (free_head != NULL)
+        {
+            free_head(temp -> head);
+        }
         free(temp);
     }
 }

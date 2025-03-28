@@ -48,12 +48,14 @@ void *p_queue_t_pull(p_queue_t **queue, void (*free_priority)(void *))
     }
 
     p_queue_t *temp = *queue;
+    *queue = (*queue) -> tail;
+
     void *content = temp -> content;
-
-    free_priority(temp -> priority);
+    if (free_priority != NULL)
+    {
+        free_priority(temp -> priority);
+    }
     free(temp);
-
-    *queue = *queue -> tail;
 
     return content;
 }
@@ -62,6 +64,10 @@ void p_queue_t_free(p_queue_t *queue, void (*free_content)(void *), void (*free_
 {
     while (queue != NULL)
     {
-        free_content(p_queue_t_pull(&queue, free_priority));
+        void *content = p_queue_t_pull(&queue, free_priority);
+        if (free_content != NULL)
+        {
+            free_content(content);
+        }
     }
 }
