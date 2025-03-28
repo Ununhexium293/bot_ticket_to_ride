@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include "../header/dijkstra.h"
-#include "../../structures/header/priority_queue.h"
+#include "../../structures/header/priority_queue_node.h"
 
 static int point(int length)
 {
@@ -38,7 +38,7 @@ int *dijkstra(board_t *board, board_t *my_board, int node_a, int node_b, float p
 
     p_queue_t *queue = NULL;
 
-    p_queue_t_add(&queue, node_a, -1, 0);
+    node_p_queue_t_add(&queue, node_a, -1, 0);
 
     while (!seen[node_b] && queue != NULL)
     {
@@ -56,7 +56,7 @@ int *dijkstra(board_t *board, board_t *my_board, int node_a, int node_b, float p
                 if (!seen[edge_list_head(list) -> node])
                 {
                     /*Here the priority is calculated with a combination of the length and the point of the path*/
-                    p_queue_t_add(&queue, edge_list_head(list) -> node, queue -> node, queue -> priority + (proportion * ((float) edge_list_head(list) -> length)) + ((1. - proportion) * (16 - ((float) point(edge_list_head(list) -> length)))));
+                    node_p_queue_t_add(&queue, edge_list_head(list) -> node, queue -> node, queue -> priority + (proportion * ((float) edge_list_head(list) -> length)) + ((1. - proportion) * (16 - ((float) point(edge_list_head(list) -> length)))));
                 }
 
                 list = list -> tail;
@@ -69,7 +69,7 @@ int *dijkstra(board_t *board, board_t *my_board, int node_a, int node_b, float p
                 if (!seen[edge_list_head(list) -> node])
                 {
                     /*Here the priority is calculated with the length only because we already own the path*/
-                    p_queue_t_add(&queue, edge_list_head(list) -> node, queue -> node, queue -> priority);
+                    node_p_queue_t_add(&queue, edge_list_head(list) -> node, queue -> node, queue -> priority);
                 } 
 
                 list = list -> tail;
@@ -89,10 +89,10 @@ int *dijkstra(board_t *board, board_t *my_board, int node_a, int node_b, float p
             //fflush(stdout);
         }
 
-        p_queue_t_rm(&queue);
+        node_p_queue_t_rm(&queue);
     }
 
-    p_queue_t_free(queue);
+    node_p_queue_t_free(queue);
 
     if (seen[node_b])
     {

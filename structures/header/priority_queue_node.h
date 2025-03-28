@@ -9,13 +9,13 @@ typedef struct p_queue_{
 } p_queue_t;
 
 /*add an element to the priority queue*/
-void p_queue_t_add(p_queue_t **queue, int node, int parent, float priority);
+void node_p_queue_t_add(p_queue_t **queue, int node, int parent, float priority);
 
 /*remove the head of the queue*/
-void p_queue_t_rm(p_queue_t **queue);
+void node_p_queue_t_rm(p_queue_t **queue);
 
 /*free the queue*/
-void p_queue_t_free(p_queue_t *queue);
+void node_p_queue_t_free(p_queue_t *queue);
 
 
 #endif

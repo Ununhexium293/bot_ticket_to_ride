@@ -1,10 +1,10 @@
 #include <stdlib.h>
 #include <stdio.h>
-#include "../header/priority_queue.h"
+#include "../header/priority_queue_node.h"
 
 //#define DEBUG_PRIORITY_QUEUE
 
-void p_queue_t_add(p_queue_t **queue, int node, int parent, float priority)
+void node_p_queue_t_add(p_queue_t **queue, int node, int parent, float priority)
 {
     p_queue_t *temp_prec = NULL;
     p_queue_t *temp = *queue;
@@ -29,7 +29,7 @@ void p_queue_t_add(p_queue_t **queue, int node, int parent, float priority)
     }
 }
 
-void p_queue_t_rm(p_queue_t **queue)
+void node_p_queue_t_rm(p_queue_t **queue)
 {
     if (queue != NULL && *queue != NULL)
     {
@@ -39,7 +39,7 @@ void p_queue_t_rm(p_queue_t **queue)
     }
 }
 
-void p_queue_t_free(p_queue_t *queue)
+void node_p_queue_t_free(p_queue_t *queue)
 {
     while (queue != NULL)
     {
