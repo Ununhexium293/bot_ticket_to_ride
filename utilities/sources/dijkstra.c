@@ -2,23 +2,8 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include "../header/dijkstra.h"
+#include "../header/priority_calc.h"
 #include "../../structures/header/priority_queue_node.h"
-
-static int point(int length)
-{
-    switch(length)
-    {
-        case 1 : return 1;
-        case 2 : return 2;
-        case 3 : return 4;
-        case 4 : return 7;
-        case 5 : return 10;
-        case 6 : return 15;
-        default : 
-            printf("Chemin trop long : %d\n", length);
-            exit(EXIT_FAILURE);
-    }
-}
 
 int *dijkstra(board_t *board, board_t *my_board, int node_a, int node_b, float proportion)
 {
@@ -40,12 +25,6 @@ int *dijkstra(board_t *board, board_t *my_board, int node_a, int node_b, float p
 
     node_p_queue_push(&queue, node_a, -1, 0.);
 
-
-
-
-
-
-    /*______________________*/
     while (!seen[node_b] && queue != NULL)
     {
         float priority = *((float *) queue -> priority);
@@ -65,7 +44,7 @@ int *dijkstra(board_t *board, board_t *my_board, int node_a, int node_b, float p
                 if (!seen[edge_list_head(list) -> node])
                 {
                     /*Here the priority is calculated with a combination of the length and the point of the path*/
-                    node_p_queue_push(&queue, edge_list_head(list) -> node, nodes -> node, priority + (proportion * ((float) edge_list_head(list) -> length)) + ((1. - proportion) * (16 - ((float) point(edge_list_head(list) -> length)))));
+                    node_p_queue_push(&queue, edge_list_head(list) -> node, nodes -> node, priority + priority_calculation(board, nodes -> node, edge_list_head(list) -> node, proportion));
                 }
 
                 list = list -> tail;
