@@ -11,9 +11,11 @@ GameData *connect_bot(const char *bot_name, const char *setting)
     }
 
     GameData *data = malloc(sizeof(GameData));
-    if(data == NULL)
+    if (data == NULL)
     {
-        return NULL;
+        printf("Allocation failure in file %s, function %s, line %d\n", __FILE__, __func__, __LINE__);
+        fflush(stdout);
+        exit(EXIT_FAILURE);
     }
 
     int sendgamesetting_deb = sendGameSettings(setting, data);

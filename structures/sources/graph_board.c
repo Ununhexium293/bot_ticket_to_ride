@@ -11,7 +11,8 @@ board_t *board_t_init(int nb_node, int cards[4])
 
     if (board == NULL)
     {
-        printf("Allocation of size board_t failed.\n");
+        printf("Allocation failure in file %s, function %s, line %d\n", __FILE__, __func__, __LINE__);
+        fflush(stdout);
         exit(EXIT_FAILURE);
     }
 
@@ -20,7 +21,8 @@ board_t *board_t_init(int nb_node, int cards[4])
 
     if (graph == NULL)
     {
-        printf("Allocation of size edge_list_t * x nb_node failed.\n");
+        printf("Allocation failure in file %s, function %s, line %d\n", __FILE__, __func__, __LINE__);
+        fflush(stdout);
         exit(EXIT_FAILURE);
     }
 
@@ -48,11 +50,11 @@ board_t *board_t_init(int nb_node, int cards[4])
         card[cards[i] - 1] += 1;
     }
 
-
     board -> graph = graph;
     board -> nb_node = nb_node;
     board -> cards = card;
     board -> wagons = 45;
+    board -> objectives = NULL;
 
     return board;
 }
@@ -64,6 +66,7 @@ void board_t_free(board_t *board)
         edge_list_free(board -> graph[i]);
     }
 
+    objective_list_free(board -> objectives);
     free(board -> graph);
     free(board -> cards);
     free(board);

@@ -1,7 +1,9 @@
 #ifndef GRAPH_BOARD_H
 #define GRAPH_BOARD_H
 
+#include "linked_list.h"
 #include "linked_list_arete.h"
+#include "linked_list_objective.h"
 
 typedef struct board_
 {
@@ -9,6 +11,7 @@ typedef struct board_
     int nb_node;
     int *cards;
     int wagons;
+    linked_list_t *objectives;
     /*objectif à ajouter*/
 } board_t;
 
