@@ -1,7 +1,8 @@
-#include <stdlob.h>
+#include <stdlib.h>
 #include <stdio.h>
 #include "../header/get_point.h"
 #include "../header/kruskal.h"
+#include "../header/priority_calc.h"
 #include "../../structures/header/union_find.h"
 #include "../../structures/header/priority_queue_node.h"
 #include "../../structures/header/graph_board.h"
@@ -59,10 +60,10 @@ int *kruskal(board_t *board, float p)
         union_find_t_union(arm, nodes -> node, nodes -> parent);
     }
 
-    return_tab = arm -> former;
+    int *return_tab = arm -> former;
 
     free(arm -> rank);
     free(arm);
 
-    return arm;
+    return return_tab;
 }

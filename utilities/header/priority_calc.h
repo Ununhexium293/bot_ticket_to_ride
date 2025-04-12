@@ -1,5 +1,5 @@
-#ifndef PRIORITY_CLAC_H
-#define PRIORITY_CLAC_H
+#ifndef PRIORITY_CALC_H
+#define PRIORITY_CALC_H
 
 #include "../../structures/header/graph_board.h"
 
