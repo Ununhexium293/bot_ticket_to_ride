@@ -12,7 +12,6 @@ typedef struct board_
     int *cards;
     int wagons;
     linked_list_t *objectives;
-    /*objectif à ajouter*/
 } board_t;
 
 /*Create an empty board*/
