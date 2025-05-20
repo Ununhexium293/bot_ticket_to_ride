@@ -4,3 +4,4 @@ test*
 Makefile
 bot
 *.o
+bots
