@@ -48,7 +48,7 @@ static p_queue_t *graph_to_queue(board_t *board, float p)
     return queue;
 }
 
-int *kruskal(board_t *board, float p)
+int *kruskal(board_t *board, float p, int (*priority_calculation)(board_t *board, int node_a, int node_b, float p))
 {
     union_find_t *arm = union_find_t_init(board -> nb_node);
     p_queue_t *queue = graph_to_queue(board, p);
