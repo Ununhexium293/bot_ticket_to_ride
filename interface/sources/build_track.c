@@ -9,6 +9,11 @@ static int is_buidable(objective_t *path, board_t *board)
     int is_it = 0;
     edge_t *edge = edge_list_get_node(board -> graph[path -> node_1], path -> node_2);
 
+    if (edge -> length < board -> wagon)
+    {
+        return 0;
+    }
+    
     if (edge -> color2 == 0)
     {
         is_it = (board -> cards[edge -> color1 - 1]) - (edge -> length);
