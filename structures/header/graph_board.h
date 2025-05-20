@@ -11,6 +11,7 @@ typedef struct board_
     int nb_node;
     int *cards;
     int wagons;
+    int opponent_wagon;
     linked_list_t *objectives;
 } board_t;
 

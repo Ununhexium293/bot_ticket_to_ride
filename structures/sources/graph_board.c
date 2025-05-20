@@ -54,6 +54,7 @@ board_t *board_t_init(int nb_node, int cards[4])
     board -> nb_node = nb_node;
     board -> cards = card;
     board -> wagons = 45;
+    board -> opponent_wagons = 45;
     board -> objectives = NULL;
 
     return board;
