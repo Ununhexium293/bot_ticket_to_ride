@@ -5,7 +5,7 @@
 #include "header/pick_card.h"
 #include "header/pick_objective.h"
 #include "header/build_track.h"
-//
-//#include "header/opponent_turn.h"
+
+#include "header/opponent_turn.h"
 
 #endif
