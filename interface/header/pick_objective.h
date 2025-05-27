@@ -5,6 +5,6 @@
 #include "../../tickettorideapi/ticketToRide.h"
 
 /*Use the function choose_objective to draw and choose objectives*/
-int pick_objective(board_t *board, bool *(*choose_objective)(Objective *));
+int pick_objective(board_t *board, board_t *my_board, bool *(*choose_objective)(board_t *, board_t *, Objective *));
 
 #endif

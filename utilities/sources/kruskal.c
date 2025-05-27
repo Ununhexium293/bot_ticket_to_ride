@@ -1,13 +1,11 @@
 #include <stdlib.h>
 #include <stdio.h>
-#include "../header/get_point.h"
 #include "../header/kruskal.h"
-#include "../header/priority_calc.h"
 #include "../../structures/header/union_find.h"
 #include "../../structures/header/priority_queue_node.h"
 #include "../../structures/header/graph_board.h"
 
-static p_queue_t *graph_to_queue(board_t *board, float p)
+static p_queue_t *graph_to_queue(board_t *board, float p, float (*priority_calculation)(board_t *board, int node_a, int node_b, float p))
 {
     int **path_added = malloc(sizeof(int *) * board -> nb_node);
 
@@ -48,10 +46,10 @@ static p_queue_t *graph_to_queue(board_t *board, float p)
     return queue;
 }
 
-int *kruskal(board_t *board, float p, int (*priority_calculation)(board_t *board, int node_a, int node_b, float p))
+union_find_t *kruskal(board_t *board, float p, float (*priority_calculation)(board_t *board, int node_a, int node_b, float p))
 {
     union_find_t *arm = union_find_t_init(board -> nb_node);
-    p_queue_t *queue = graph_to_queue(board, p);
+    p_queue_t *queue = graph_to_queue(board, p, priority_calculation);
 
     while (queue != NULL)
     {
@@ -60,10 +58,5 @@ int *kruskal(board_t *board, float p, int (*priority_calculation)(board_t *board
         union_find_t_union(arm, nodes -> node, nodes -> parent);
     }
 
-    int *return_tab = arm -> former;
-
-    free(arm -> rank);
-    free(arm);
-
-    return return_tab;
+    return arm;
 }

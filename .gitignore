@@ -4,4 +4,4 @@ test*
 Makefile
 bot
 *.o
-bots
+bot_quentin_LV

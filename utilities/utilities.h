@@ -4,6 +4,7 @@
 #include "header/dijkstra.h"
 #include "header/get_point.h"
 #include "header/kruskal.h"
-#include "priority_calc.h"
+#include "header/priority_calc.h"
+#include "header/path_length.h"
 
 #endif

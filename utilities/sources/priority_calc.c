@@ -1,4 +1,3 @@
-#include <stdlib.h>
 #include "../header/get_point.h"
 #include "../../structures/header/graph_board.h"
 

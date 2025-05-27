@@ -15,7 +15,7 @@ typedef struct board_
     linked_list_t *objectives;
 } board_t;
 
-/*Create an empty board*/
+/**Create an empty board */
 board_t *board_t_init(int nb_node, int cards[4]);
 
 /*Add an edge to the graph, linking node_a and noe_b*/

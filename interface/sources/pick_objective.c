@@ -113,7 +113,7 @@ static int choose(bool *obj)
 
 /*________________________________________________________________________________________________________________*/
 
-int pick_objective(board_t *board, bool *(*choose_objective)(Objective *))
+int pick_objective(board_t *board, board_t *my_board, bool *(*choose_objective)(board_t *, board_t *, Objective *))
 {
     Objective *obj = draw();
 
@@ -122,7 +122,7 @@ int pick_objective(board_t *board, bool *(*choose_objective)(Objective *))
         return EXIT_FAILURE;
     }
 
-    bool *obj_choosen = choose_objective(obj);
+    bool *obj_choosen = choose_objective(board, my_board, obj);
 
     for (int i = 0; i < 3; i++)
     {

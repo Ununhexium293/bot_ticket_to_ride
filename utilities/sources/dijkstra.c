@@ -2,10 +2,9 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include "../header/dijkstra.h"
-#include "../header/priority_calc.h"
 #include "../../structures/header/priority_queue_node.h"
 
-int *dijkstra(board_t *board, board_t *my_board, int node_a, int node_b, float proportion, int (*priority_calculation)(board_t *board, int node_a, int node_b, float p))
+int *dijkstra(board_t *board, board_t *my_board, int node_a, int node_b, float proportion, float (*priority_calculation)(board_t *board, int node_a, int node_b, float p))
 {
     int seen[board -> nb_node];
     int *parent = malloc(sizeof(int) * board -> nb_node);
@@ -72,6 +71,7 @@ int *dijkstra(board_t *board, board_t *my_board, int node_a, int node_b, float p
     {
         return parent;
     }else{
+        free(parent);
         return NULL;
     }
 }
