@@ -32,8 +32,8 @@ static p_queue_t *graph_to_queue(board_t *board, float p, float (*priority_calcu
                 path_added[i][edge -> node] = 0;
 
                 node_p_queue_push(&queue, i, edge -> node, priority_calculation(board, i, edge -> node, p));
-                list = list -> tail;
             }
+            list = list -> tail;
         }
     }
 
@@ -46,8 +46,15 @@ static p_queue_t *graph_to_queue(board_t *board, float p, float (*priority_calcu
     return queue;
 }
 
-union_find_t *kruskal(board_t *board, float p, float (*priority_calculation)(board_t *board, int node_a, int node_b, float p))
+board_t *kruskal(board_t *board, float p, float (*priority_calculation)(board_t *board, int node_a, int node_b, float p))
 {
+    int *cards = malloc(sizeof(int) * 4);
+    for (int i = 0; i < 4; i++)
+    {
+        cards[i] = 5;
+    }
+    board_t *abrm = board_t_init(board -> nb_node, cards);
+
     union_find_t *arm = union_find_t_init(board -> nb_node);
     p_queue_t *queue = graph_to_queue(board, p, priority_calculation);
 
@@ -55,8 +62,10 @@ union_find_t *kruskal(board_t *board, float p, float (*priority_calculation)(boa
     {
         double_node_t *nodes = node_p_queue_pull(&queue);
 
-        union_find_t_union(arm, nodes -> node, nodes -> parent);
+        union_find_t_union(arm, abrm, nodes -> node, nodes -> parent);
     }
 
-    return arm;
+    union_find_t_free(arm);
+    
+    return abrm;
 }

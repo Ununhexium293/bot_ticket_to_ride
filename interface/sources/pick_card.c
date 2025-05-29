@@ -45,7 +45,7 @@ static int send_move_pick_card(int choosen_card, MoveData *data, MoveResult *mov
     return move -> state;
 }
 
-int pick_card(board_t *board, linked_list_t *path, int (*to_pick)(board_t *, linked_list_t *, int))
+int pick_card(board_t *board, linked_list_t *path, int forward_wiew, int (*to_pick)(board_t *, linked_list_t *, int, int))
 {
     MoveData *data = malloc(sizeof(MoveData));
     if (data == NULL)
@@ -65,7 +65,7 @@ int pick_card(board_t *board, linked_list_t *path, int (*to_pick)(board_t *, lin
 
     /*_____________________________*/
 
-    int choosen_card = to_pick(board, path, 1);
+    int choosen_card = to_pick(board, path, forward_wiew, 1);
 
     send_move_pick_card(choosen_card, data, move, board);
 
@@ -74,7 +74,7 @@ int pick_card(board_t *board, linked_list_t *path, int (*to_pick)(board_t *, lin
     
     if (choosen_card != 9)
     {
-        choosen_card = to_pick(board, path, 0);
+        choosen_card = to_pick(board, path, forward_wiew, 0);
 
         send_move_pick_card(choosen_card, data, move, board);
     }

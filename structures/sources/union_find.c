@@ -1,6 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
-#include "../header/union_find.h"
+#include "../structures.h"
 
 union_find_t *union_find_t_init(int nb_node)
 {
@@ -19,9 +19,17 @@ union_find_t *union_find_t_init(int nb_node)
         exit(EXIT_FAILURE);
     }
 
+    int *parent = malloc(sizeof(int) * nb_node);
+    if (parent == NULL)
+    {
+        printf("Allocation of size int * nb_node failed.\n");
+        exit(EXIT_FAILURE);
+    }
+
     for (int i = 0; i < nb_node; i++)
     {
         former[i] = i;
+        parent[i] = i;
     }
 
     int *rank = malloc(sizeof(int) * nb_node);
@@ -53,21 +61,26 @@ int union_find_t_find(union_find_t *arm, int node)
     return current;
 }
 
-void union_find_t_union(union_find_t *arm, int node_a, int node_b)
+void union_find_t_union(union_find_t *arm, board_t *abrm, int node_a, int node_b)
 {
     int rep_a = union_find_t_find(arm, node_a);
     int rep_b = union_find_t_find(arm, node_b);
 
-    if (arm -> rank[rep_a] > arm -> rank[rep_b])
+    if (rep_a != rep_b)
     {
-        arm -> former[rep_b] = rep_a;
-    }else{
-        arm -> former[rep_a] = rep_b;
-
-        if (arm -> rank[rep_a] == arm -> rank[rep_b])
+        if (arm -> rank[rep_a] > arm -> rank[rep_b])
         {
-            arm -> rank[rep_b] += 1;
+            arm -> former[rep_b] = rep_a;
+        }else{
+            arm -> former[rep_a] = rep_b;
+
+            if (arm -> rank[rep_a] == arm -> rank[rep_b])
+            {
+                arm -> rank[rep_b] += 1;
+            }
         }
+
+        board_t_add(abrm, node_a, node_b, 1, 1, 1);
     }
 }
 

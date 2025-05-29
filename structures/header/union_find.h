@@ -1,6 +1,8 @@
 #ifndef UNION_FIND_H
 #define UNION_FIND_H
 
+#include "graph_board.h"
+
 typedef struct {
     int *former;
     int *rank;
@@ -9,7 +11,7 @@ typedef struct {
 
 union_find_t *union_find_t_init(int nb_node);
 
-void union_find_t_union(union_find_t *arm, int node_a, int node_b);
+void union_find_t_union(union_find_t *arm, board_t *abrm, int node_a, int node_b);
 
 int union_find_t_find(union_find_t *arm, int node);
 

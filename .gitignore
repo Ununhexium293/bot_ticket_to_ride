@@ -1,7 +1,5 @@
 tickettorideapi
 .vscode
 test*
-Makefile
-bot
 *.o
 bot_quentin_LV

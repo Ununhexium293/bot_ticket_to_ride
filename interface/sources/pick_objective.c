@@ -105,15 +105,17 @@ static int choose(bool *obj)
         free(move -> message);
     }
 
+    int state = move -> state;
+
     free(move);
     free(data);
 
-    return EXIT_SUCCESS;
+    return state;
 }
 
 /*________________________________________________________________________________________________________________*/
 
-int pick_objective(board_t *board, board_t *my_board, bool *(*choose_objective)(board_t *, board_t *, Objective *))
+int pick_objective(board_t *board, board_t *my_board, float p, float overlap_choice, float (*priority_calculation_)(board_t *, int, int, float), bool *(*choose_objective)(board_t *, board_t *, Objective *, float, float , float (*priority_calculation)(board_t *, int, int, float)))
 {
     Objective *obj = draw();
 
@@ -122,7 +124,7 @@ int pick_objective(board_t *board, board_t *my_board, bool *(*choose_objective)(
         return EXIT_FAILURE;
     }
 
-    bool *obj_choosen = choose_objective(board, my_board, obj);
+    bool *obj_choosen = choose_objective(board, my_board, obj, p, overlap_choice, priority_calculation_);
 
     for (int i = 0; i < 3; i++)
     {
@@ -133,12 +135,10 @@ int pick_objective(board_t *board, board_t *my_board, bool *(*choose_objective)(
     }
 
     free(obj);
-    if (choose(obj_choosen) == EXIT_FAILURE)
-    {
-        free(obj_choosen);
-        return EXIT_FAILURE;
-    }
+    
+    int state = choose(obj_choosen);
+
     free(obj_choosen);
 
-    return EXIT_SUCCESS;
+    return state;
 }
