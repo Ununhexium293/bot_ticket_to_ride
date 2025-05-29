@@ -39,12 +39,14 @@ int can_build_something(board_t *board, linked_list_t *list, int forward_view)
 {
     int ok = -1;
 
-    for (int i = 0; i < forward_view && ok == -1; i++)
+    for (int i = 0; i < forward_view && ok == -1 && list != NULL; i++)
     {
         if (is_buidable((objective_t *) list -> head, board))
         {
             ok = i;
         }
+
+        list = list -> tail;
     }
 
     return ok;
