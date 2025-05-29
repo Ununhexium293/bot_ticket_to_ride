@@ -1,43 +1,8 @@
 #include "../../structures/structures.h"
+#include "../../utilities/utilities.h"
 #include "../../tickettorideapi/ticketToRide.h"
 #include <stdio.h>
 #include <stdlib.h>
-
-/*revois la couleur avec laquelle on prend un chemin, 0 sinon*/
-static int is_buidable(objective_t *path, board_t *board)
-{
-    int is_it = 0;
-    edge_t *edge = edge_list_get_node(board -> graph[path -> node_1], path -> node_2);
-
-    if (edge -> length < board -> wagons)
-    {
-        return 0;
-    }
-
-    if (edge -> color2 == 0)
-    {
-        is_it = (board -> cards[edge -> color1 - 1]) - (edge -> length);
-
-        is_it = (is_it >= 0) ? edge -> color1 : 0;
-    }else{
-        int a = board -> cards[edge -> color1 - 1];
-        int b = board -> cards[edge -> color2 - 1];
-
-        is_it = ((a < b) ? b : a) - (edge -> length);
-
-        /*on verrifie que l'on a assez de carte (couleur + loco) pour poser la route*/
-        is_it = (is_it + board -> cards[8] >= 0) ? is_it : 0;
-
-        if (is_it == a - (edge -> length))
-        {
-            is_it = edge -> color1;
-        }else if (is_it == b - (edge -> length)){
-            is_it = edge -> color2;
-        }
-    }
-
-    return is_it;
-}
 
 static unsigned int nb_loco(int color, board_t *board, int length)
 {

@@ -46,3 +46,39 @@ int *calculate_path(board_t *board, board_t *my_board, union_find_t *abrm, int n
 
     return path;
 }
+
+static void add_path_to_list(board_t *board, linked_list_t **list, int *path, int node_a, int node_b)
+{
+    for (int i = node_b; i != node_a; i = path[i])
+    {
+        edge_t *edge = edge_list_get_node(board -> graph[i], path[i]);
+
+        if (edge != NULL)
+        {
+            objective_list_add(list, node_a, node_b, 0);
+        }
+    }
+
+    free(path);
+}
+
+linked_list_t *path_planning(board_t *board, board_t *my_board, float p, float (*priority_calculation)(board_t *, int, int, float))
+{
+    linked_list_t *obj = board -> objectives;
+
+    union_find_t *krusk = kruskal(board, p, priority_calculation);
+
+    linked_list_t *plan = NULL;
+
+    while (obj != NULL)
+    {
+        int node_a = ((objective_t *) obj -> head) -> node_1;
+        int node_b = ((objective_t *) obj -> head) -> node_2;
+        add_path_to_list(board, &plan, calculate_path(board, my_board, krusk, node_a, node_b), node_a, node_b);
+        obj = obj -> tail;
+    }
+
+    union_find_t_free(krusk);
+
+    return plan;
+}
