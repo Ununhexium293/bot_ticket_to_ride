@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include "../utilities.h"
 
 int is_buidable(objective_t *path, board_t *board)
