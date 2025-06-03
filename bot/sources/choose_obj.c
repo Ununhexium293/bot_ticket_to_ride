@@ -76,7 +76,7 @@ bool *choose_objective(board_t *board, board_t *my_board, Objective *objs, float
 
 #if STRAT == KRUSK
 
-    board_t *krusk = kruskal(board, p, priority_calculation);
+    board_t *krusk = kruskal(board, my_board, p, priority_calculation);
 
     for (int i = 0; i < 3; i++)
     {
@@ -252,7 +252,7 @@ bool *choose_objective_start(board_t *board, board_t *my_board, Objective *objs,
 
 #if STRAT == KRUSK
 
-    board_t *krusk = kruskal(board, p, priority_calculation);
+    board_t *krusk = kruskal(board, my_board, p, priority_calculation);
     
     for (int i = 0; i < 3; i++)
     {

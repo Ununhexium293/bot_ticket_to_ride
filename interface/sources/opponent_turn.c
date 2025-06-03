@@ -58,6 +58,7 @@ int opponent_turn(board_t *board)
         replay = 1;
     }else if (data -> action == DRAW_CARD)
     {
+        printf("%d\n", move -> card);
         if (move -> card != LOCOMOTIVE)
         {
             result = getMove(data, move);

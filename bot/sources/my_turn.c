@@ -40,6 +40,8 @@ static void update_obj(board_t *board, board_t *my_board)
             free(path);
         }
 
+        /*+ pour chemin impossible*/
+
         objs = objs -> tail;
     }
 
@@ -82,6 +84,7 @@ int my_turn(board_t *board, board_t *my_board, float p, float overlap_choice, in
             }
         }
     }
+    //printBoard();
 
     return status;
 }

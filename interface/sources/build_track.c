@@ -34,7 +34,7 @@ int build_track(board_t *board, board_t *my_board, linked_list_t *path, int forw
 
     for (int i = 0; i < forward_view && temp != NULL && ok; i++)
     {
-        objective_t *edge = (objective_t *) path -> head;
+        objective_t *edge = (objective_t *) temp -> head;
         int color = is_buidable(edge, board);
 
         if (color)
@@ -62,6 +62,8 @@ int build_track(board_t *board, board_t *my_board, linked_list_t *path, int forw
             data -> action = CLAIM_ROUTE;
             data -> claimRoute = claim;
         }
+
+        temp = temp -> tail;
     }
 
     ResultCode send_move_result = sendMove(data, move);

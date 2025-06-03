@@ -11,7 +11,7 @@ SRC= does_it_work.c $(tickettorideapi_path) $(structures_path) $(utilities_path)
 OBJ= $(SRC:.c=.o)
 
 bot_quentin_LV : $(OBJ)
-	gcc -o $@ $^ -fsanitize=address
+	gcc -o $@ $^
 	
 %.o : %.c
 	gcc -c -O0 -o $@ $^ -Wall -Werror -g3

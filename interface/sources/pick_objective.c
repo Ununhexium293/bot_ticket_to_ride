@@ -84,7 +84,7 @@ static int choose(bool *obj)
 
     ResultCode send_move_result = sendMove(data, move);
 
-    if (send_move_result != ALL_GOOD || move -> state != NORMAL_MOVE)
+    if (send_move_result != ALL_GOOD)
     {
         return EXIT_FAILURE;
     }

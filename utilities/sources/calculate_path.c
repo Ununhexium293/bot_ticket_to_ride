@@ -83,7 +83,7 @@ static void add_path_to_list(board_t *board, linked_list_t **list, int *path, in
 
         if (edge != NULL)
         {
-            objective_list_add(list, node_a, node_b, 0);
+            objective_list_add(list, i, path[i], 0);
         }
     }
 
@@ -94,7 +94,7 @@ linked_list_t *path_planning(board_t *board, board_t *my_board, float p, float (
 {
     linked_list_t *obj = board -> objectives;
 
-    board_t *krusk = kruskal(board, p, priority_calculation);
+    board_t *krusk = kruskal(board, my_board, p, priority_calculation);
 
     linked_list_t *plan = NULL;
 

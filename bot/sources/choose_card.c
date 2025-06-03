@@ -2,7 +2,7 @@
 #include "../../structures/structures.h"
 #include "../../tickettorideapi/ticketToRide.h"
 
-int choose_card(board_t *board, linked_list_t *path, int forward_wiew, int loco)
+int choose_card(board_t *board, linked_list_t *path, int forward_wiew, int loco)/*il faut gerer les chemin multicolore*/
 {
     int choice = 0;
 
@@ -25,6 +25,20 @@ int choose_card(board_t *board, linked_list_t *path, int forward_wiew, int loco)
         edge_t *edge = edge_list_get_node(board -> graph[track -> node_1], track -> node_2);
 
         int color = ((cards[edge -> color1] > cards[edge -> color2]) ? edge -> color1 : edge -> color2);
+
+        if (color == 9)
+        {
+            int max = 0;
+
+            for (int i = 0; i < 8; i++)
+            {
+                if (max < board -> cards[i])
+                {
+                    max = board  -> cards[i];
+                    color = i;
+                }
+            }
+        }
 
         for (int j = 0; j < 5 && !choice; j++)
         {

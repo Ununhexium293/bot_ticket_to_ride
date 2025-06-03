@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include <stdlib.h>
 #include "../../tickettorideapi/ticketToRide.h"
 #include "../../tickettorideapi/clientAPI.h"
@@ -26,15 +27,17 @@ static board_t *data_to_board(GameData *data)
 void bot(char *setting)
 {
     float p = 0.5;
-    float overlap_choice = 0.1;
-    int forward_view = 3;
+    float overlap_choice = 0.5;
+    int forward_view = 5;
     #ifdef DEBUG_CONNECT
-    DEBUG_LEVEL=INTERN_DEBUG;
+    DEBUG_LEVEL= NONE; //INTERN_DEBUG;
     #endif
 
     int restart = 0;
 
     GameData *data = connect_bot("bot_quentin_lv___", setting);
+    printf("\n seed : %d\n\n", data -> gameSeed);
+    fflush(stdout);
 
     do
     {
@@ -59,12 +62,13 @@ void bot(char *setting)
 
         while (state == NORMAL_MOVE)
         {
+            
             if (!turn)
             {
-                my_turn(board, my_board, p, overlap_choice, forward_view, first);
+                state = my_turn(board, my_board, p, overlap_choice, forward_view, first);
                 first = 0;
             }else{
-                opponent_turn(board);
+                state = opponent_turn(board);
             }
             turn = 1 - turn;
         }
