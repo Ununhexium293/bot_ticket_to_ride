@@ -38,12 +38,15 @@ void bot(char *setting)
     int forward_view_place = 2;
     int forward_view_pick = 5;
     #ifdef DEBUG_CONNECT
-    DEBUG_LEVEL= INTERN_DEBUG; //INTERN_DEBUG;
+    DEBUG_LEVEL= NONE; //INTERN_DEBUG;
     #endif
+
+    int nb_won = 0;
+    int total = 0;
 
     int restart = 0;
 
-    GameData *data = connect_bot("bot_quentin_lv___", setting);
+    GameData *data = connect_bot("bot_quentin_lv", setting);
 
     do
     {
@@ -80,7 +83,19 @@ void bot(char *setting)
             turn = 1 - turn;
         }
 
+        total ++;
+        
+        if ((state == 1 && turn == 0)||(state == -1 && turn == 1))
+        {
+            printf("loose %d\n", total - nb_won);
+        }else{
+            nb_won ++;
+            printf("won %d\n", nb_won);
+        }
+
+        printf("total %d\n", total);
+
         board_t_free(board);
         board_t_free(my_board);
-    }while(1);
+    }while(total < 100);
 }

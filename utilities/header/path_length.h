@@ -5,6 +5,7 @@
 
 int path_length(board_t *board, int *path, int node_a, int node_b);
 
+/*need to free output*/
 int *path_overlap_length(board_t *board, int **path, int *node_a, int *node_b);
 
 #endif

@@ -12,7 +12,7 @@
     modif dijsktra pour prendre en compte le nombre de wagon
 */
 
-#define PRINT_DO
+//#define PRINT_DO
 
 static void update_obj(board_t *board, board_t *my_board)
 {
@@ -41,6 +41,14 @@ static void update_obj(board_t *board, board_t *my_board)
         }
 
         /*+ pour chemin impossible*/
+        path = dijkstra(board, my_board, obj -> node_1, obj -> node_2, 0.5, priority_calculation);
+        if (path != NULL)
+        {
+            ;
+        }else {
+            objective_list_rm(&(board -> objectives), obj -> node_1, obj -> node_2);
+            free(path);
+        }
 
         objs = objs -> tail;
     }

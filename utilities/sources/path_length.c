@@ -7,14 +7,6 @@ int path_length(board_t *board, int *path, int node_a, int node_b)
 {
     int length = 0;
 
-    /*debug*/
-    for (int i = 0; i < board -> nb_node; i++)
-    {
-        printf("%d : %d, ", i, path[i]);
-    }
-    printf("\n");
-    fflush(stdout);
-
     for (int i = node_b; i != node_a; i = path[i])
     {
         edge_t *edge = edge_list_get_node(board -> graph[i], path[i]);

@@ -43,6 +43,16 @@ int opponent_turn(board_t *board)
         free(move -> message);
     }
 
+    if (move -> state != NORMAL_MOVE)
+    {
+        MoveState state = move -> state;
+
+        free(data);
+        free(move);
+
+        return state;
+    }
+
     int replay = 0;
 
     if (data -> action == CLAIM_ROUTE)
@@ -58,7 +68,7 @@ int opponent_turn(board_t *board)
         replay = 1;
     }else if (data -> action == DRAW_CARD)
     {
-        if (data -> drawCard != LOCOMOTIVE || move -> replay)
+        if (data -> drawCard != LOCOMOTIVE)
         {
             result = getMove(data, move);
             replay = 1;
