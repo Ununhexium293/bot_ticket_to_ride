@@ -21,7 +21,7 @@ bool *choose_objective(board_t *board, board_t *my_board, Objective *objs, float
     {
         cards[i] = 5;
     }
-    board_t *empty = board_t_init(1, cards);
+    board_t *empty = board_t_init(board -> nb_node, cards);
     free(cards);
 
     /*check if any objective is impossible*/

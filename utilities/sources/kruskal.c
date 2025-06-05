@@ -1,12 +1,47 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "../header/kruskal.h"
+#include "../header/dijkstra.h"
 #include "../../structures/header/union_find.h"
 #include "../../structures/header/priority_queue_node.h"
 #include "../../structures/header/graph_board.h"
 
 static p_queue_t *graph_to_queue(board_t *board, board_t *my_board, float p, float (*priority_calculation)(board_t *board, int node_a, int node_b, float p))
 {
+
+    #ifdef UPGRADE
+
+    /*On a au plus 3 objectif en meme temps*/
+    linked_list_t *obj = board -> objectives;
+    int *paths;
+    int used[board -> nb_node][board -> nb_node];
+
+    for (int i = 0; i < board -> nb_node; i++)
+    {
+        for (int j = 0; j < board -> nb_node; j++)
+        {
+            used[i][j] = 0;
+        }
+    }
+
+    for (int i = 0; i < 3 && obj !=NULL; i++)
+    {
+        int node_a = ((objective_t *) obj -> head) -> node_1;
+        int node_b = ((objective_t *) obj -> head) -> node_2;
+
+        paths = dijkstra(board, my_board,  node_a, node_b, p, priority_calculation);
+
+        for (int j = node_b; j != node_a; j = paths[j])
+        {
+            used[j][paths[j]] += 1;
+            used[j][paths[j]] += 1;
+        }
+
+        free(paths);
+    }
+    
+    #endif
+    
     int **path_added = malloc(sizeof(int *) * board -> nb_node);
 
     for (int i = 0; i < board -> nb_node; i++)
@@ -31,7 +66,11 @@ static p_queue_t *graph_to_queue(board_t *board, board_t *my_board, float p, flo
                 path_added[edge -> node][i] = 0;
                 path_added[i][edge -> node] = 0;
 
+                #ifdef UPGRADE
+                node_p_queue_push(&queue, i, edge -> node, priority_calculation(board, i, edge -> node, p) - (p * edge ->length * used[i][edge -> node]));
+                #else
                 node_p_queue_push(&queue, i, edge -> node, priority_calculation(board, i, edge -> node, p));
+                #endif
             }
             
             list = list -> tail;
