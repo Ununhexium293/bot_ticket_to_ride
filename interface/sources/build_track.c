@@ -53,6 +53,7 @@ int build_track(board_t *board, board_t *my_board, linked_list_t *path, int forw
             claim.color = color;
             claim.nbLocomotives = locos;
 
+            board -> wagons -= length;
             board -> cards[color - 1] -= length - locos;
             board -> cards[8] -= locos;
 

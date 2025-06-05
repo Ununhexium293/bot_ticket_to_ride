@@ -1,3 +1,10 @@
+#ifndef STRAT
+#define KRUSK 0
+#define DIJ 1
+
+#define STRAT KRUSK
+#endif
+
 #include <stdio.h>
 #include <stdlib.h>
 #include "../../tickettorideapi/ticketToRide.h"
@@ -9,7 +16,7 @@
 
 extern int DEBUG_LEVEL;
 #define DEBUG_CONNECT
-#define DEBUG_HOME
+//#define DEBUG_HOME
 
 static board_t *data_to_board(GameData *data)
 {
@@ -27,17 +34,16 @@ static board_t *data_to_board(GameData *data)
 void bot(char *setting)
 {
     float p = 0.5;
-    float overlap_choice = 0.5;
-    int forward_view = 5;
+    float overlap_choice = 0.9;
+    int forward_view_place = 2;
+    int forward_view_pick = 5;
     #ifdef DEBUG_CONNECT
-    DEBUG_LEVEL= NONE; //INTERN_DEBUG;
+    DEBUG_LEVEL= INTERN_DEBUG; //INTERN_DEBUG;
     #endif
 
     int restart = 0;
 
     GameData *data = connect_bot("bot_quentin_lv___", setting);
-    printf("\n seed : %d\n\n", data -> gameSeed);
-    fflush(stdout);
 
     do
     {
@@ -46,6 +52,9 @@ void bot(char *setting)
             sendGameSettings(setting, data);
         }
         restart = 1;
+
+        printf("\n seed : %d\n\n", data -> gameSeed);
+        fflush(stdout);
 
         board_t *board = data_to_board(data);
         int tab[4] = {1, 2, 3, 4};
@@ -56,8 +65,6 @@ void bot(char *setting)
 
         int first = 1;
 
-        printBoard();
-
         int state = NORMAL_MOVE;
 
         while (state == NORMAL_MOVE)
@@ -65,7 +72,7 @@ void bot(char *setting)
             
             if (!turn)
             {
-                state = my_turn(board, my_board, p, overlap_choice, forward_view, first);
+                state = my_turn(board, my_board, p, overlap_choice, forward_view_place, forward_view_pick, first);
                 first = 0;
             }else{
                 state = opponent_turn(board);

@@ -48,7 +48,7 @@ static void update_obj(board_t *board, board_t *my_board)
     board_t_free(empty);
 }
 
-int my_turn(board_t *board, board_t *my_board, float p, float overlap_choice, int forward_view, int first_turn)
+int my_turn(board_t *board, board_t *my_board, float p, float overlap_choice, int forward_view_place, int forward_view_pick, int first_turn)
 {
     #ifdef PRINT_DO
     int debug = 1;
@@ -72,15 +72,15 @@ int my_turn(board_t *board, board_t *my_board, float p, float overlap_choice, in
             if (debug){printf("Prend objectif.\n"); fflush(stdout);}
             status = pick_objective(board, my_board, p, overlap_choice, priority_calculation, choose_objective);
         }else{
-            int buildable = can_build_something(board, paths, forward_view);
+            int buildable = can_build_something(board, paths, forward_view_place);
 
             if (buildable == -1)
             {
                 if (debug){printf("Prend carte.\n"); fflush(stdout);}
-                status = pick_card(board, paths, forward_view, choose_card);
+                status = pick_card(board, paths, forward_view_pick, choose_card);
             }else{
                 if (debug){printf("Prend chemin.\n"); fflush(stdout);}
-                status = build_track(board, my_board, paths, forward_view);
+                status = build_track(board, my_board, paths, forward_view_place);
             }
         }
     }

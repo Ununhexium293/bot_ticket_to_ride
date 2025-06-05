@@ -63,36 +63,27 @@ int *path_overlap_length(board_t *board, int **path, int *node_a, int *node_b)
     {
         for (int j = node_b[1]; j != node_a[1]; j = path[1][j])
         {
-            int ok = 1;
-
             if (i == j && path[0][i] == path[1][j])
             {
-                if (i == j && path[0][i] == path[1][j])
+                edge_t *edge = edge_list_get_node(board -> graph[i], path[0][i]);
+                if (edge != NULL)
                 {
-                    edge_t *edge = edge_list_get_node(board -> graph[i], path[0][i]);
-                    if (edge != NULL)
-                    {
-                        lengths[3] += edge -> length;
-                    }
+                    lengths[3] += edge -> length;
                 }
-
-                ok = 0;
             }
 
             for (int k = node_b[2]; k != node_a[2]; k = path[2][k])
             {
-                if (i == k && path[0][i] == path[2][k] && ok)
+                if (i == k && path[0][i] == path[2][k])
                 {
                     edge_t *edge = edge_list_get_node(board -> graph[i], path[0][i]);
                     if (edge != NULL)
                     {
                         lengths[3] += edge -> length;
                     }
-                    
-                    ok = 0;
                 }
 
-                if (j == k && path[1][j] == path[2][k] && ok)
+                if (j == k && path[1][j] == path[2][k])
                 {
                     edge_t *edge = edge_list_get_node(board -> graph[j], path[1][j]);
                     if (edge != NULL)

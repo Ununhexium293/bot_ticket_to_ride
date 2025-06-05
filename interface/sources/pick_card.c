@@ -67,7 +67,7 @@ int pick_card(board_t *board, linked_list_t *path, int forward_wiew, int (*to_pi
 
     int choosen_card = to_pick(board, path, forward_wiew, 1);
 
-    send_move_pick_card(choosen_card, data, move, board);
+    MoveState state = send_move_pick_card(choosen_card, data, move, board);
 
     /*_____________________________*/
 
@@ -76,10 +76,8 @@ int pick_card(board_t *board, linked_list_t *path, int forward_wiew, int (*to_pi
     {
         choosen_card = to_pick(board, path, forward_wiew, 0);
 
-        send_move_pick_card(choosen_card, data, move, board);
+        state = send_move_pick_card(choosen_card, data, move, board);
     }
-
-    MoveState state = move -> state;
 
     free(data);
     free(move);

@@ -3,6 +3,12 @@
 #include "../../structures/structures.h"
 #include "../utilities.h"
 
+#ifndef STRAT
+#define KRUSK 0
+#define DIJ 1
+
+#define STRAT KRUSK
+#endif
 
 static float just_length(board_t *board, int node_a, int node_b, float p)
 {
@@ -94,7 +100,9 @@ linked_list_t *path_planning(board_t *board, board_t *my_board, float p, float (
 {
     linked_list_t *obj = board -> objectives;
 
+    #if STRAT == KRUSK
     board_t *krusk = kruskal(board, my_board, p, priority_calculation);
+    #endif
 
     linked_list_t *plan = NULL;
 
@@ -102,7 +110,12 @@ linked_list_t *path_planning(board_t *board, board_t *my_board, float p, float (
     {
         int node_a = ((objective_t *) obj -> head) -> node_1;
         int node_b = ((objective_t *) obj -> head) -> node_2;
+        
+        #if STRAT == KRUSK
         add_path_to_list(board, &plan, calculate_path(board, my_board, krusk, node_a, node_b), node_a, node_b);
+        #elif STRAT == DIJ
+        add_path_to_list(board, &plan, dijkstra(board, my_board, node_a, node_b, p, priority_calculation), node_a, node_b);
+        #endif
         obj = obj -> tail;
     }
 
