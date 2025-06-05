@@ -15,7 +15,7 @@ extern int DEBUG_LEVEL;
 
 int main(int argc, char **argv)
 {
-    float p = 0.5;
+    float p = 1.;
     float overlap_choice = 0.9;
     int forward_view_place = 2;
     int forward_view_pick = 5;

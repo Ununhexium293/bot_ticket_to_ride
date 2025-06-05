@@ -126,17 +126,30 @@ int pick_objective(board_t *board, board_t *my_board, float p, float overlap_cho
 
     bool *obj_choosen = choose_objective(board, my_board, obj, p, overlap_choice, priority_calculation_);
 
+    int state = choose(obj_choosen);
+
     for (int i = 0; i < 3; i++)
     {
-        if (obj_choosen[i])
+        int ind = -1;
+        int big = 0;
+        for (int j = 0; j < 3; j++)
         {
-            objective_list_add(&(board -> objectives), obj[i].from, obj[i].to, obj[i].score);
+            if (obj_choosen[j] && obj[j].score > big)
+            {
+                ind = j;
+                big = obj[j].score;
+            }
         }
+
+        if (ind != -1)
+        {
+            objective_list_add(&(board -> objectives), obj[ind].from, obj[ind].to, obj[ind].score);
+        }
+
+        obj_choosen[ind] = false;
     }
 
     free(obj);
-    
-    int state = choose(obj_choosen);
 
     free(obj_choosen);
 

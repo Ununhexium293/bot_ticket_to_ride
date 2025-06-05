@@ -1,10 +1,3 @@
-#ifndef STRAT
-#define KRUSK 0
-#define DIJ 1
-
-#define STRAT DIJ
-#endif
-
 #include <stdio.h>
 #include <stdlib.h>
 #include "../../tickettorideapi/ticketToRide.h"
@@ -13,10 +6,6 @@
 #include "../../structures/structures.h"
 #include "../../utilities/utilities.h"
 #include "../header/my_turn.h"
-
-extern int DEBUG_LEVEL;
-#define DEBUG_CONNECT
-//#define DEBUG_HOME
 
 static board_t *data_to_board(GameData *data)
 {
@@ -94,4 +83,6 @@ void bot(char *setting, char *name, int p, int overlap_choice, int forward_view_
         board_t_free(board);
         board_t_free(my_board);
     }while(total < 100);
+    
+    disconnect_bot(data);
 }
