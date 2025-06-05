@@ -2,7 +2,7 @@
 #define KRUSK 0
 #define DIJ 1
 
-#define STRAT KRUSK
+#define STRAT DIJ
 #endif
 
 #include <stdio.h>
@@ -31,12 +31,8 @@ static board_t *data_to_board(GameData *data)
     return board;
 }
 
-void bot(char *setting)
+void bot(char *setting, char *name, int p, int overlap_choice, int forward_view_place, int forward_view_pick)
 {
-    float p = 0.5;
-    float overlap_choice = 0.9;
-    int forward_view_place = 2;
-    int forward_view_pick = 5;
     #ifdef DEBUG_CONNECT
     DEBUG_LEVEL= NONE; //INTERN_DEBUG;
     #endif
@@ -46,7 +42,7 @@ void bot(char *setting)
 
     int restart = 0;
 
-    GameData *data = connect_bot("bot_quentin_lv", setting);
+    GameData *data = connect_bot(name, setting);
 
     do
     {

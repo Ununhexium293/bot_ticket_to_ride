@@ -37,17 +37,21 @@ static void update_obj(board_t *board, board_t *my_board)
             ;
         }else {
             objective_list_rm(&(board -> objectives), obj -> node_1, obj -> node_2);
+            obj = NULL;
             free(path);
         }
 
         /*+ pour chemin impossible*/
-        path = dijkstra(board, my_board, obj -> node_1, obj -> node_2, 0.5, priority_calculation);
-        if (path != NULL)
+        if (obj != NULL)
         {
-            ;
-        }else {
-            objective_list_rm(&(board -> objectives), obj -> node_1, obj -> node_2);
-            free(path);
+            path = dijkstra(board, my_board, obj -> node_1, obj -> node_2, 0.5, priority_calculation);
+            if (path != NULL)
+            {
+                ;
+            }else {
+                objective_list_rm(&(board -> objectives), obj -> node_1, obj -> node_2);
+                free(path);
+            }
         }
 
         objs = objs -> tail;

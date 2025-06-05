@@ -110,7 +110,7 @@ linked_list_t *path_planning(board_t *board, board_t *my_board, float p, float (
     {
         int node_a = ((objective_t *) obj -> head) -> node_1;
         int node_b = ((objective_t *) obj -> head) -> node_2;
-                
+        
         #if STRAT == KRUSK
         add_path_to_list(board, &plan, calculate_path(board, my_board, krusk, node_a, node_b), node_a, node_b);
         #elif STRAT == DIJ
