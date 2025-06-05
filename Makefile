@@ -14,7 +14,7 @@ bot_quentin_LV : $(OBJ)
 	gcc -o $@ $^
 	
 %.o : %.c
-	gcc -c -O0 -o $@ $^ -Wall -Werror -g3
+	gcc -c -O0 -o $@ $^ -Wall -g3
 
 .PHONY : clean
 clean : 

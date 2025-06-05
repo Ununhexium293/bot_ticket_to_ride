@@ -6,6 +6,15 @@
 #include "../../structures/header/priority_queue_node.h"
 #include "../../structures/header/graph_board.h"
 
+#ifndef UPGRADE
+#define UPGRADE
+#endif
+
+static float just_length(board_t *board, int node_a, int node_b, float p)
+{
+    return edge_list_get_node(board -> graph[node_a], node_b) -> length;
+}
+
 static p_queue_t *graph_to_queue(board_t *board, board_t *my_board, float p, float (*priority_calculation)(board_t *board, int node_a, int node_b, float p))
 {
 
@@ -29,7 +38,7 @@ static p_queue_t *graph_to_queue(board_t *board, board_t *my_board, float p, flo
         int node_a = ((objective_t *) obj -> head) -> node_1;
         int node_b = ((objective_t *) obj -> head) -> node_2;
 
-        paths = dijkstra(board, my_board,  node_a, node_b, p, priority_calculation);
+        paths = dijkstra(board, my_board,  node_a, node_b, p, just_length);
 
         for (int j = node_b; j != node_a; j = paths[j])
         {

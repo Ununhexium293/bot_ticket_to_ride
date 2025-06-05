@@ -9,7 +9,7 @@ static int float_compare(void *a, void *b)
     return (*((float *) a) < *((float *) b)) ? 0 : 1;
 }
 
-void node_p_queue_push(p_queue_t **queue, int node, int parent, float priority)
+void node_p_queue_push(p_queue_t **queue, int node, int parent, float priority, int length)
 {
     if (queue == NULL)
     {
@@ -37,6 +37,7 @@ void node_p_queue_push(p_queue_t **queue, int node, int parent, float priority)
 
     nodes -> node = node;
     nodes -> parent = parent;
+    nodes -> length = length;
 
     p_queue_t_push(queue, nodes, prio, float_compare);
 }

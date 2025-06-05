@@ -110,11 +110,23 @@ linked_list_t *path_planning(board_t *board, board_t *my_board, float p, float (
     {
         int node_a = ((objective_t *) obj -> head) -> node_1;
         int node_b = ((objective_t *) obj -> head) -> node_2;
+
+        #if STRAT == KRUSK
+        int *path = calculate_path(board, my_board, krusk, node_a, node_b);
+        #elif STRAT == DIJ
+        int *path = dijkstra(board, my_board, node_a, node_b, p, priority_calculation);
+        #endif
+
+        if (path_length(board, path, node_a, node_b) > board -> wagons)
+        {
+            free(path);
+            path = dijkstra(board, my_board, node_a, node_b, p, just_length);
+        }
         
         #if STRAT == KRUSK
-        add_path_to_list(board, &plan, calculate_path(board, my_board, krusk, node_a, node_b), node_a, node_b);
+        add_path_to_list(board, &plan, path, node_a, node_b);
         #elif STRAT == DIJ
-        add_path_to_list(board, &plan, dijkstra(board, my_board, node_a, node_b, p, priority_calculation), node_a, node_b);
+        add_path_to_list(board, &plan, path, node_a, node_b);
         #endif
         obj = obj -> tail;
     }

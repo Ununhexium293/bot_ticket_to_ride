@@ -22,7 +22,7 @@ int *dijkstra(board_t *board, board_t *my_board, int node_a, int node_b, float p
 
     p_queue_t *queue = NULL;
 
-    node_p_queue_push(&queue, node_a, -1, 0.);
+    node_p_queue_push(&queue, node_a, -1, 0., 0);
 
     while (!seen[node_b] && queue != NULL)
     {
@@ -40,10 +40,10 @@ int *dijkstra(board_t *board, board_t *my_board, int node_a, int node_b, float p
             linked_list_t *list = board -> graph[nodes -> node];
             while (list != NULL)
             {
-                if (!seen[edge_list_head(list) -> node])
+                if (!seen[edge_list_head(list) -> node] && nodes -> length + edge_list_head(list) -> length <= board -> wagons)
                 {
                     /*Here the priority is calculated with a combination of the length and the point of the path*/
-                    node_p_queue_push(&queue, edge_list_head(list) -> node, nodes -> node, priority + priority_calculation(board, nodes -> node, edge_list_head(list) -> node, proportion));
+                    node_p_queue_push(&queue, edge_list_head(list) -> node, nodes -> node, priority + priority_calculation(board, nodes -> node, edge_list_head(list) -> node, proportion), nodes -> length + edge_list_head(list) -> length);
                 }
 
                 list = list -> tail;
@@ -56,7 +56,7 @@ int *dijkstra(board_t *board, board_t *my_board, int node_a, int node_b, float p
                 if (!seen[edge_list_head(list) -> node])
                 {
                     /*Here the priority is calculated with the length only because we already own the path*/
-                    node_p_queue_push(&queue, edge_list_head(list) -> node, nodes -> node, priority);
+                    node_p_queue_push(&queue, edge_list_head(list) -> node, nodes -> node, priority, nodes -> length);
                 } 
 
                 list = list -> tail;

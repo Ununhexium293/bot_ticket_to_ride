@@ -41,7 +41,6 @@ static void update_obj(board_t *board, board_t *my_board)
             free(path);
         }
 
-        /*+ pour chemin impossible*/
         if (obj != NULL)
         {
             path = dijkstra(board, my_board, obj -> node_1, obj -> node_2, 0.5, priority_calculation);
