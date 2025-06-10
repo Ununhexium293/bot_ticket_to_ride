@@ -82,7 +82,7 @@ void bot(char *setting, char *name, int p, int overlap_choice, int forward_view_
 
         board_t_free(board);
         board_t_free(my_board);
-    }while(total < 100);
+    }while(1);
     
     disconnect_bot(data);
 }

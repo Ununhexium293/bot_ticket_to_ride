@@ -14,6 +14,17 @@
 
 //#define PRINT_DO
 
+//static int nb_card(board_t *board)
+//{
+//    int tot = 0;
+//    for (int i = 0; i < 8; i++)
+//    {
+//        tot += 1;
+//    }
+//
+//    return tot;
+//}
+
 static void update_obj(board_t *board, board_t *my_board)
 {
     linked_list_t *objs = board -> objectives;
@@ -76,7 +87,7 @@ int my_turn(board_t *board, board_t *my_board, float p, float overlap_choice, in
 
         update_obj(board, my_board);
         
-        linked_list_t *paths = path_planning(board, my_board, p, priority_calculation);
+        linked_list_t *paths = path_planning(board, my_board, p, forward_view_place, priority_calculation);
 
         if (board -> objectives == NULL && board -> wagons > 15 && board -> opponent_wagon > 15)
         {
@@ -99,6 +110,11 @@ int my_turn(board_t *board, board_t *my_board, float p, float overlap_choice, in
 
     return status;
 }
+
+/*
++50 carte : 2732264 5856990
+seg fault : 122271 10511844
+*/
 
 /*si 45 wagon et 0 objectif piocher objectif*/
 /*calcul chemin*/

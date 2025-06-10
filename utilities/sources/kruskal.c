@@ -76,9 +76,9 @@ static p_queue_t *graph_to_queue(board_t *board, board_t *my_board, float p, flo
                 path_added[i][edge -> node] = 0;
 
                 #ifdef UPGRADE
-                node_p_queue_push(&queue, i, edge -> node, priority_calculation(board, i, edge -> node, p) - (p * edge ->length * used[i][edge -> node]));
+                node_p_queue_push(&queue, i, edge -> node, priority_calculation(board, i, edge -> node, p) - (p * edge ->length * used[i][edge -> node]), 0);
                 #else
-                node_p_queue_push(&queue, i, edge -> node, priority_calculation(board, i, edge -> node, p));
+                node_p_queue_push(&queue, i, edge -> node, priority_calculation(board, i, edge -> node, p), 0);
                 #endif
             }
             
@@ -94,7 +94,7 @@ static p_queue_t *graph_to_queue(board_t *board, board_t *my_board, float p, flo
                 path_added[edge -> node][i] = 0;
                 path_added[i][edge -> node] = 0;
 
-                node_p_queue_push(&queue, i, edge -> node, ~0);
+                node_p_queue_push(&queue, i, edge -> node, ~0, 0);
             }
 
             list = list -> tail;

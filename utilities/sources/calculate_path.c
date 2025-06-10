@@ -96,7 +96,7 @@ static void add_path_to_list(board_t *board, linked_list_t **list, int *path, in
     free(path);
 }
 
-linked_list_t *path_planning(board_t *board, board_t *my_board, float p, float (*priority_calculation)(board_t *, int, int, float))
+static linked_list_t *path_planning_norm(board_t *board, board_t *my_board, float p, float (*priority_calculation)(board_t *, int, int, float))
 {
     linked_list_t *obj = board -> objectives;
 
@@ -136,4 +136,141 @@ linked_list_t *path_planning(board_t *board, board_t *my_board, float p, float (
     #endif
 
     return plan;
+}
+
+
+static int nb_card(board_t *board)
+{
+    int tot = 0;
+    for (int i = 0; i <= 8; i++)
+    {
+        tot += board -> cards[i];
+    }
+
+    return tot;
+}
+
+static linked_list_t *best_possible(board_t *board)
+{
+    objective_t best;
+    int longest = 0;
+    int needed = 10;
+
+    int nb_more_color = board -> cards[0];
+    for (int j = 1; j < 8; j++)
+    {
+        if (nb_more_color < board -> cards[j])
+        {
+            nb_more_color = board -> cards[j];
+        }
+    }
+
+    for (int i = 0; i < board -> nb_node; i++)
+    {
+        linked_list_t *list = board -> graph[i];
+        while(list != NULL)
+        {
+            edge_t *edge = edge_list_head(list);
+            if (edge -> length >= longest)
+            {
+                int temp;
+                if (edge -> color1 == 8)
+                {
+                    temp = edge -> length - nb_more_color;
+                }else{
+                    temp = edge -> length - board -> cards[(board -> cards[edge -> color1] > (board -> cards[edge -> color2])) ? edge -> color1 : edge -> color2];
+                }
+
+                if (longest == edge -> length && needed > temp)
+                {
+                    longest = edge -> length;
+                    best.node_1 = i;
+                    best.node_2 = edge -> node;
+                    needed = temp;
+                }else if (longest < edge -> length){
+                    longest = edge -> length;
+                    best.node_1 = i;
+                    best.node_2 = edge -> node;
+                    needed = temp;
+                }
+            }
+
+            list = list -> tail;
+        }
+    }
+
+    linked_list_t *path = NULL;
+
+    objective_list_add(&path, best.node_1, best.node_2, 0);
+
+    return path;
+}
+
+static linked_list_t *best_claimable(board_t *board)
+{
+    objective_t best;
+    int longest = 0;
+    int needed = 10;
+
+    int nb_more_color = board -> cards[0];
+    for (int j = 1; j < 8; j++)
+    {
+        if (nb_more_color < board -> cards[j])
+        {
+            nb_more_color = board -> cards[j];
+        }
+    }
+
+    for (int i = 0; i < board -> nb_node; i++)
+    {
+        linked_list_t *list = board -> graph[i];
+        while(list != NULL)
+        {
+            edge_t *edge = edge_list_head(list);
+            if (edge -> length > longest)
+            {
+                if (edge -> color1 == 8)
+                {
+                    needed = edge -> length - nb_more_color;
+                }else{
+                    needed = edge -> length - board -> cards[(board -> cards[edge -> color1] > (board -> cards[edge -> color2])) ? edge -> color1 : edge -> color2];
+                }
+
+                if (needed <= 0)
+                {
+                    longest = edge -> length;
+                    best.node_1 = i;
+                    best.node_2 = edge -> node;
+                }
+            }
+
+            list = list -> tail;
+        }
+    }
+
+    linked_list_t *path = NULL;
+
+    objective_list_add(&path, best.node_1, best.node_2, 0);
+
+    return path;
+}
+
+linked_list_t *path_planning(board_t *board, board_t *my_board, float p, int forward_view, float (*priority_calculation)(board_t *, int, int, float))
+{
+    linked_list_t *paths = path_planning_norm(board, my_board, p, priority_calculation);
+    int buildable = can_build_something(board, paths, forward_view);
+    
+    if (nb_card(board) >= 48 || board -> opponent_wagon < 4 )
+    {
+        objective_list_free(paths);
+        paths = best_claimable(board);
+        return paths;
+    }else if (paths == NULL || (board -> wagons - edge_list_get_node(board -> graph[((objective_t *) paths -> head) -> node_1], ((objective_t *) paths -> head) -> node_2) -> length < 3 && !buildable && paths -> tail != NULL))
+    {
+        objective_list_free(paths);
+        paths = best_possible(board);
+        return paths;
+    }
+
+    return paths;
 }

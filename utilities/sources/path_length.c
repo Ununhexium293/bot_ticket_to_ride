@@ -7,13 +7,18 @@ int path_length(board_t *board, int *path, int node_a, int node_b)
 {
     int length = 0;
 
-    for (int i = node_b; i != node_a; i = path[i])
+    if (path != NULL)
     {
-        edge_t *edge = edge_list_get_node(board -> graph[i], path[i]);
-        if (edge != NULL)
+        for (int i = node_b; i != node_a; i = path[i])
         {
-            length += edge -> length;
+            edge_t *edge = edge_list_get_node(board -> graph[i], path[i]);
+            if (edge != NULL)
+            {
+                length += edge -> length;
+            }
         }
+    }else{
+        length = 100000;
     }
 
     return length;

@@ -181,13 +181,13 @@ bool *choose_objective(board_t *board, board_t *my_board, Objective *objs, float
 
     if (choosen[rank[0]])
     {
-        if (choosen[rank[1]] && choosen[rank[2]] && rapport_overlap_length[3] >= overlap_choice && overlap[3] - (lengths[0] + lengths[1] + lengths[2]) >= board -> wagons)
+        if (choosen[rank[1]] && choosen[rank[2]] && rapport_overlap_length[3] >= overlap_choice && -(overlap[3] - (lengths[0] + lengths[1] + lengths[2])) >= board -> wagons)
         {
             ;
-        }else if (choosen[rank[1]] && rapport_overlap_length[0] >= overlap_choice && overlap[0] - (lengths[0] + lengths[1]) >= board -> wagons)
+        }else if (choosen[rank[1]] && rapport_overlap_length[0] >= overlap_choice && -(overlap[0] - (lengths[0] + lengths[1])) >= board -> wagons)
         {
             choosen[rank[2]] = false;
-        }else if(choosen[rank[2]] && rapport_overlap_length[2] >= overlap_choice && overlap[2] - (lengths[0] + lengths[2]) >= board -> wagons){
+        }else if(choosen[rank[2]] && rapport_overlap_length[2] >= overlap_choice && -(overlap[2] - (lengths[0] + lengths[2])) >= board -> wagons){
             choosen[rank[1]] = false;
         }else{
             choosen[rank[1]] = false;
@@ -195,7 +195,7 @@ bool *choose_objective(board_t *board, board_t *my_board, Objective *objs, float
         }
     }else if(choosen[rank[1]])
     {
-        if (choosen[rank[2]] && rapport_overlap_length[1] >= overlap_choice && overlap[1] - (lengths[1] + lengths[2]) >= board -> wagons)
+        if (choosen[rank[2]] && rapport_overlap_length[1] >= overlap_choice && -(overlap[1] - (lengths[1] + lengths[2])) >= board -> wagons)
         {
             ;
         }else{
@@ -337,13 +337,13 @@ bool *choose_objective_start(board_t *board, board_t *my_board, Objective *objs,
 
     /*rank[0] est le premier objectif selectinné*/
 
-    if (rapport_overlap_length[3] >= overlap_choice && overlap[3] - (lengths[0] + lengths[1] + lengths[2]) >= board -> wagons)
+    if (rapport_overlap_length[3] >= overlap_choice && -(overlap[3] - (lengths[0] + lengths[1] + lengths[2])) >= board -> wagons)
     {
         ;
-    }else if (rapport_overlap_length[0] >= overlap_choice && overlap[0] - (lengths[0] + lengths[1]) >= board -> wagons)
+    }else if (rapport_overlap_length[0] >= overlap_choice && -(overlap[0] - (lengths[0] + lengths[1])) >= board -> wagons)
     {
         choosen[rank[2]] = false;
-    }else if(rapport_overlap_length[2] >= overlap_choice && overlap[2] - (lengths[0] + lengths[2]) >= board -> wagons)
+    }else if(rapport_overlap_length[2] >= overlap_choice && -(overlap[2] - (lengths[0] + lengths[2])) >= board -> wagons)
     {
         choosen[rank[1]] = false;
     }else{
